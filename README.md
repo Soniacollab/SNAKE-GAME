@@ -1,29 +1,50 @@
 # SNAKEFINAL
 
-Petit jeu Snake en JavaScript (module ESM). Améliorations : commentaires en français, gestion du score centralisée, et fix d'import circulaire.
+Jeu Snake en JavaScript (ES Modules) avec écran d’accueil (pseudo + difficulté), HUD (Score / Temps / Niveau) et tableau des meilleurs scores (localStorage).
 
-Exécution locale
+## Démo locale
 
-- Ouvrir `index.html` directement dans un navigateur moderne (Chrome/Edge/Firefox). Si vous avez des problèmes de modules ou de chargement d'images, lancez un serveur HTTP simple :
+Le jeu utilise des imports ES (`type="module"`) → il est recommandé de lancer un petit serveur HTTP (ouvrir le fichier HTML “en local” peut bloquer les modules selon le navigateur).
 
-PowerShell (npx http-server si Node installé) :
-
-```powershell
-cd C:\Users\sokhn\Downloads\projects\SNAKEFINAL
-npx http-server -c-1
-```
-
-Ou avec Python 3 (serveur simple) :
+### Option 1 — Serveur rapide (Node)
 
 ```powershell
 cd C:\Users\sokhn\Downloads\projects\SNAKEFINAL
-python -m http.server 8000
+npx --yes http-server -p 8080 -c-1
 ```
 
-Puis ouvrez `http://localhost:8000` dans votre navigateur.
+Puis ouvrir : `http://127.0.0.1:8080/`
 
-Notes importantes
+### Option 2 — Si vous servez tout le dossier `projects/`
 
-- Le pseudo est demandé au démarrage via `prompt()`.
-- Le score est sauvegardé dans `localStorage` à la fin d'une partie et les 5 meilleurs scores sont affichés.
-- Si vous voulez que je modifie le style (CSS) ou le comportement (vitesse, dimensions, images), dis-moi ce que tu souhaites.
+```powershell
+cd C:\Users\sokhn\Downloads\projects
+npx --yes http-server -p 8080 -c-1
+```
+
+Puis ouvrir : `http://127.0.0.1:8080/SNAKEFINAL/`
+
+## Contrôles
+
+- Flèches : déplacer le serpent
+- Espace : pause / reprise, et rejouer après un Game Over
+- Entrée (sur l’écran d’accueil) : lancer la partie
+
+## Fonctionnalités
+
+- Écran d’accueil : pseudo + choix de difficulté (vitesse / croissance)
+- HUD : score, temps, niveau
+- Meilleurs scores : sauvegarde locale via `localStorage`
+
+## Structure
+
+- `index.html` : layout + overlays
+- `assets/style.css` : styles
+- `main.js` : boot + boucle de jeu
+- `src/game/*` : logique (Game / Snake / Food / Renderer)
+- `src/ui/WelcomeScreen.js` : écran d’accueil
+
+## Notes
+
+- Les scores sont stockés uniquement dans le navigateur (aucun envoi en ligne).
+- Les assets (images) sont dans `img/`.

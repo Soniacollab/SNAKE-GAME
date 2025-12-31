@@ -23,11 +23,29 @@ window.onload = async function() {
 
   // Créer une nouvelle instance de Game et passer le canvas et gameState
     const game = new Game(canvas, gameState, surname || 'Player');
+  // Preserve difficulty so reset keeps the same level
+  const speed = welcome.speed || 150;
+  const growth = welcome.growth || 2;
+  game.initialSpeed = speed;
+  game.initialGrowth = growth;
+  game.speed = speed;
+  game.growthSize = growth;
 
   // Resize canvas to fit viewport responsively (keeps square)
   function fitCanvas() {
-    const maxSize = Math.min(window.innerWidth * 0.88, window.innerHeight * 0.78, 900);
-    const size = Math.floor(maxSize);
+    const hud = document.getElementById('hud');
+    const hudH = hud ? Math.ceil(hud.getBoundingClientRect().height) : 0;
+    const bodyStyles = getComputedStyle(document.body);
+    const padY = (parseFloat(bodyStyles.paddingTop) || 0) + (parseFloat(bodyStyles.paddingBottom) || 0);
+    const padX = (parseFloat(bodyStyles.paddingLeft) || 0) + (parseFloat(bodyStyles.paddingRight) || 0);
+
+    // keep a small gap between HUD and canvas
+    const gap = 14;
+
+    const maxW = window.innerWidth - padX;
+    const maxH = window.innerHeight - padY - hudH - gap;
+    const maxSize = Math.min(maxW, maxH, 1200);
+    const size = Math.max(240, Math.floor(maxSize));
     canvas.style.width = size + 'px';
     canvas.style.height = size + 'px';
     // set logical canvas size to css pixel size (no DPR scaling for simplicity)
@@ -90,12 +108,7 @@ window.onload = async function() {
     }
   });
 
-  // Définir le niveau de difficulté
   // Démarrer directement la partie avec la difficulté choisie dans l'écran d'accueil
-  const speed = welcome.speed || 150;
-  const growth = welcome.growth || 2;
-  game.speed = speed;
-  game.growthSize = growth;
   // Démarrer la boucle de jeu
   requestAnimationFrame(gameLoop);
 }

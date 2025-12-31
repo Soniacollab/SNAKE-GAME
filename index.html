@@ -9,19 +9,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Snake Game</title>
   <link rel="stylesheet" href="./assets/style.css">
-  <!-- Favicon de secours (utilise une image existante) -->
-  <link rel="icon" href="img/snake_background.png" type="image/png">
+  <link rel="icon" href="./favicon.ico">
 
   </style>
 </head>
 
 <body>
-  <div id="hud" class="hud">
-    <div id="hud-score">Score: 0</div>
-    <div id="hud-time">Temps: 00:00</div>
-    <div id="hud-level">Niveau: 1</div>
+  <div class="game-wrapper" id="game-wrapper">
+    <div id="hud" class="hud" aria-label="Informations de partie">
+      <div id="hud-score">Score: 0</div>
+      <div id="hud-time">Temps: 00:00</div>
+      <div id="hud-level">Niveau: 1</div>
+    </div>
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
   </div>
-  <canvas id="gameCanvas" width="600" height="600"></canvas>
   <!-- Welcome overlay (remplace alert) -->
   <div id="welcome-screen" class="overlay">
     <div class="card welcome-card">

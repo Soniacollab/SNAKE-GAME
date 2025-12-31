@@ -24,6 +24,8 @@ export class Game {
     // Réglages par défaut
     this.speed = 200;
     this.growthSize = 1;
+    this.initialSpeed = null; // will be set by main.js to preserve difficulty across resets
+    this.initialGrowth = null;
 
     // Timing et états
     this.lastUpdateTime = 0;
@@ -48,8 +50,9 @@ export class Game {
     // Remise à zéro de l'état interne
     this.snake = new Snake();
     this.food.generateFood(this.width, this.height, this.snake);
-    this.speed = 300;
-    this.growthSize = 1;
+    // Preserve initial difficulty if provided (so replay keeps same difficulty)
+    this.speed = (this.initialSpeed != null) ? this.initialSpeed : 300;
+    this.growthSize = (this.initialGrowth != null) ? this.initialGrowth : 1;
     this.lastUpdateTime = 0;
     this.gameOver = false;
     this.score = 0;

@@ -51,15 +51,19 @@ body::before {
 
 .game-wrapper {
     width: fit-content;
-    position: relative
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
 }
 
 /* HUD */
 .hud {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 12px;
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
     display: flex;
     gap: 12px;
     z-index: 40;
@@ -84,12 +88,14 @@ canvas#gameCanvas {
     /* make canvas larger by default but keep responsive behavior */
     width: min(92vw, 92vh, 1100px);
     height: min(92vw, 92vh, 1100px);
-    margin-top: 20px;
+    border: 3px solid rgba(0,0,0,0.35);
+    background-color: #07101a; /* stronger fallback */
+    z-index: 20;
 }
 
 /* Welcome overlay */
 .overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
     display: flex;
     align-items: center;
@@ -107,7 +113,9 @@ canvas#gameCanvas {
     box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
-    text-align: center
+    text-align: center;
+    max-height: min(86vh, 760px);
+    overflow: auto;
 }
 
 .welcome-card h1 {
@@ -124,12 +132,28 @@ canvas#gameCanvas {
 
 .welcome-card input[type=text] {
     width: 100%;
-    padding: 12px 14px;
+    height: 52px;
+    padding: 0 14px;
     border-radius: 10px;
     border: none;
     background: rgba(255, 255, 255, 0.03);
     color: #fff;
-    margin-bottom: 12px
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 52px;
+    outline: none;
+    caret-color: var(--accent);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.welcome-card input[type=text]::placeholder {
+    color: rgba(230, 238, 246, 0.55);
+}
+
+.welcome-card input[type=text]:focus {
+    box-shadow:
+        0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent),
+        inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .welcome-card .small {
@@ -153,6 +177,33 @@ canvas#gameCanvas {
     font-weight: 700;
     cursor: pointer;
     transition: all .18s ease
+}
+
+/* Make the "Commencer" button look unmistakably clickable */
+#welcome-start {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #042426;
+    box-shadow: 0 12px 32px rgba(92, 200, 170, 0.14);
+    padding: 12px 18px;
+    border-radius: 12px;
+    letter-spacing: 0.2px;
+}
+
+#welcome-start:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 40px rgba(92, 200, 170, 0.18);
+}
+
+#welcome-start:active {
+    transform: translateY(0px);
+    box-shadow: 0 12px 32px rgba(92, 200, 170, 0.14);
+}
+
+#welcome-start:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent),
+        0 12px 32px rgba(92, 200, 170, 0.14);
 }
 
 .controls button.primary {
@@ -193,14 +244,25 @@ canvas#gameCanvas {
 #high-scores {
     position: absolute;
     left: 18px;
-    top: 86px;
+    top: 140px;
     color: #cfeee3;
-    z-index: 35
+    z-index: 35;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 12px 12px;
+    min-width: 200px;
+    max-width: min(42vw, 280px);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 28px rgba(2, 6, 23, 0.55);
 }
 
 #high-scores h2 {
     font-size: 14px;
-    margin: 0 0 6px
+    margin: 0 0 8px;
+    color: rgba(230, 238, 246, 0.92);
+    letter-spacing: 0.2px;
 }
 
 #high-scores-list {
@@ -209,6 +271,22 @@ canvas#gameCanvas {
     margin: 0;
     font-size: 13px;
     color: rgba(255, 255, 255, 0.8)
+}
+
+#high-scores-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 10px;
+}
+
+#high-scores-list li:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+#high-scores-list li strong {
+    color: rgba(223, 250, 240, 0.92);
 }
 
 /* Responsive */
@@ -223,7 +301,6 @@ canvas#gameCanvas {
     }
 
     .hud {
-        top: 8px;
         padding: 6px 10px
     }
 }
