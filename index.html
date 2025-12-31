@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Spicy+Rice&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="./assets/style.css">
+  <!-- Favicon de secours (utilise une image existante) -->
+  <link rel="icon" href="img/snake_background.png" type="image/png">
+
+  </style>
+</head>
+
+<body>
+  <div id="hud" class="hud">
+    <div id="hud-score">Score: 0</div>
+    <div id="hud-time">Temps: 00:00</div>
+    <div id="hud-level">Niveau: 1</div>
+  </div>
+  <canvas id="gameCanvas" width="600" height="600"></canvas>
+  <!-- Welcome overlay (remplace alert) -->
+  <div id="welcome-screen" class="overlay">
+    <div class="card welcome-card">
+      <h1>Bienvenue sur Snake</h1>
+      <p class="lead">Entrez votre pseudo puis cliquez sur <strong>Commencer</strong></p>
+      <input id="player-name" type="text" placeholder="Ton pseudo" maxlength="20" />
+      <div class="difficulty">
+        <p class="small">Choisis la difficulté :</p>
+        <div class="controls difficulty-controls">
+          <button id="easy" data-speed="300" data-growth="1">Facile</button>
+          <button id="medium" data-speed="150" data-growth="2">Moyenne</button>
+          <button id="hard" data-speed="100" data-growth="3">Difficile</button>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="welcome-start">Commencer</button>
+      </div>
+      <p class="small">Choisir un pseudo n'enverra rien en ligne. Le GIF de fond n'est pas inclus si tu veux pousser le projet sur Git.</p>
+    </div>
+  </div>
+  <!-- removed separate difficulty-screen: difficulty is chosen in welcome overlay -->
+
+  <div id="high-scores">
+
+    <h2>Meilleurs Scores</h2>
+    <ul id="high-scores-list"></ul>
+
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>

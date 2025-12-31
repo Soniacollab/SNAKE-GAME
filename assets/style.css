@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dela+Gothic+One&display=swap');
+
+:root {
+    --bg-1: #0f1724;
+    /* deep navy */
+    --bg-2: #0b1220;
+    --accent: #5ef3c4;
+    /* mint */
+    --accent-2: #7bd0ff;
+    /* sky */
+    --muted: rgba(255, 255, 255, 0.12);
+    --glass: rgba(255, 255, 255, 0.06);
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0
+}
+
+body {
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background-image: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    color: #e6eef6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+    background-attachment: fixed;
+}
+
+/* decorative faint background image if available */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: url('../img/totoro-foret.webp');
+    background-size: cover;
+    background-position: center;
+    mix-blend-mode: screen;
+}
+
+.game-wrapper {
+    width: fit-content;
+    position: relative
+}
+
+/* HUD */
+.hud {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 12px;
+    display: flex;
+    gap: 12px;
+    z-index: 40;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px)
+}
+
+.hud div {
+    font-weight: 600;
+    color: #dffaf0
+}
+
+canvas#gameCanvas {
+    display: block;
+    background: linear-gradient(180deg, #07101a, #0b1622);
+    border-radius: 12px;
+    box-shadow: 0 14px 40px rgba(2, 6, 23, 0.7);
+    /* make canvas larger by default but keep responsive behavior */
+    width: min(92vw, 92vh, 1100px);
+    height: min(92vw, 92vh, 1100px);
+    margin-top: 20px;
+}
+
+/* Welcome overlay */
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50
+}
+
+.welcome-card {
+    width: 420px;
+    max-width: 92vw;
+    padding: 28px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    text-align: center
+}
+
+.welcome-card h1 {
+    font-family: 'Dela Gothic One', serif;
+    margin: 0 0 6px;
+    font-size: 36px;
+    color: var(--accent)
+}
+
+.welcome-card p.lead {
+    margin: 0 0 12px;
+    color: rgba(230, 238, 246, 0.85)
+}
+
+.welcome-card input[type=text] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.03);
+    color: #fff;
+    margin-bottom: 12px
+}
+
+.welcome-card .small {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 10px
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px
+}
+
+.controls button {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .18s ease
+}
+
+.controls button.primary {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #042426;
+    box-shadow: 0 10px 30px rgba(92, 200, 170, 0.12);
+}
+
+.controls button.ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.06)
+}
+
+.difficulty-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 12px
+}
+
+.difficulty-controls button {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600
+}
+
+.difficulty-controls button.selected {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #042426;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(44, 200, 170, 0.12)
+}
+
+/* footer high-scores block on the left */
+#high-scores {
+    position: absolute;
+    left: 18px;
+    top: 86px;
+    color: #cfeee3;
+    z-index: 35
+}
+
+#high-scores h2 {
+    font-size: 14px;
+    margin: 0 0 6px
+}
+
+#high-scores-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8)
+}
+
+/* Responsive */
+@media (max-width:700px) {
+    canvas#gameCanvas {
+        width: 94vw;
+        height: 94vw
+    }
+
+    .welcome-card {
+        padding: 18px
+    }
+
+    .hud {
+        top: 8px;
+        padding: 6px 10px
+    }
+}
+
+/* small helpers */
+.hidden {
+    display: none !important
+}
